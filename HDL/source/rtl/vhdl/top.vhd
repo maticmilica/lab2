@@ -180,6 +180,7 @@ architecture rtl of top is
   
   signal graph_addr_reg		  : std_logic_vector(GRAPH_MEM_ADDR_WIDTH - 1 downto 0);
   signal next_graph_addr_reg : std_logic_vector(GRAPH_MEM_ADDR_WIDTH - 1 downto 0);
+
   
   
   
@@ -297,7 +298,10 @@ begin
 	-- kvadratic
 	next_graph_addr_reg <= graph_addr_reg + 1 when graph_addr_reg < 9600		-- 1199??
 							 else (others => '0');		--conv_std_logic_vector(9600, GRAPH_MEM_ADDR_WIDTH);
-							 
+		
+
+
+		
 	cnt_reg2: reg
 	generic map(
 		WIDTH    => GRAPH_MEM_ADDR_WIDTH,
@@ -363,13 +367,13 @@ begin
   char_address <= txt_addr_reg;
   char_we <= '1';			-- when txt_addr_reg < 1200 else '0';
 					 
-  char_value <= "000001" when char_address = 0 else
-					 "000010" when char_address = 1 else
-					 "000011" when char_address = 2 else
-					 "000100" when char_address = 3 else
-					 "000101" when char_address = 4 else
-					 "000110" when char_address = 5 else				--conv_integer(txt_addr_reg) = 5 else
-					 "100000";	-- razmak
+  char_value <= o"15" when char_address = 0 else
+					 o"11" when char_address = 1 else
+					 o"14" when char_address = 2 else
+					 o"11" when char_address = 3 else
+					 o"03" when char_address = 4 else
+					 o"01" when char_address = 5 else				--conv_integer(txt_addr_reg) = 5 else
+					 "000000";	-- razmak
 					 
 
   -- koristeci signale realizovati logiku koja pise po GRAPH_MEM
@@ -377,55 +381,47 @@ begin
   --pixel_value
   --pixel_we
   
-  pixel_address <= graph_addr_reg;
-  pixel_we <= '1';
+   pixel_address <= graph_addr_reg;
+	pixel_we <= '1';
+	pixel_value <= x"FFFFFFFF" when pixel_address = 4410 else
+					   x"FFFFFFFF" when pixel_address = 4430 else
+					   x"FFFFFFFF" when pixel_address = 4450 else
+					   x"FFFFFFFF" when pixel_address = 4470 else
+					   x"FFFFFFFF" when pixel_address = 4490 else
+					   x"FFFFFFFF" when pixel_address = 4510 else
+					   x"FFFFFFFF" when pixel_address = 4530 else
+					   x"FFFFFFFF" when pixel_address = 4550 else
+					   x"FFFFFFFF" when pixel_address = 4570 else
+					   x"FFFFFFFF" when pixel_address = 4590 else
+					   x"FFFFFFFF" when pixel_address = 4610 else
+					   x"FFFFFFFF" when pixel_address = 4630 else
+					   x"FFFFFFFF" when pixel_address = 4650 else
+					   x"FFFFFFFF" when pixel_address = 4670 else
+					   x"FFFFFFFF" when pixel_address = 4690 else
+					   x"FFFFFFFF" when pixel_address = 4710 else
+					   x"FFFFFFFF" when pixel_address = 4730 else
+					   x"FFFFFFFF" when pixel_address = 4750 else
+					   x"FFFFFFFF" when pixel_address = 4770 else
+					   x"FFFFFFFF" when pixel_address = 4790 else
+					   x"FFFFFFFF" when pixel_address = 4810 else
+					   x"FFFFFFFF" when pixel_address = 4830 else
+					   x"FFFFFFFF" when pixel_address = 4850 else
+					   x"FFFFFFFF" when pixel_address = 4870 else
+					   x"FFFFFFFF" when pixel_address = 4890 else
+					   x"FFFFFFFF" when pixel_address = 4910 else
+					   x"FFFFFFFF" when pixel_address = 4930 else
+					   x"FFFFFFFF" when pixel_address = 4950 else
+					   x"FFFFFFFF" when pixel_address = 4970 else
+					   x"FFFFFFFF" when pixel_address = 4990 else
+					   x"FFFFFFFF" when pixel_address = 5010 else
+					   x"FFFFFFFF" when pixel_address = 5030 else
+					   x"FFFFFFFF" when pixel_address = 5050 else
+					   x"FFFFFFFF" when pixel_address = 5070 else
+					   x"FFFFFFFF" when pixel_address = 5090 else
+					   x"FFFFFFFF" when pixel_address = 5110 else
+					   x"FFFFFFFF" when pixel_address = 5130 else
+					   x"00000000";
   
-  pixel_value <= x"FFFFFFFF" when pixel_address = 0 else
-					  x"FFFFFFFF" when pixel_address = 20 else
-					  x"FFFFFFFF" when pixel_address = 40 else
-					  x"FFFFFFFF" when pixel_address = 60 else
-					  x"FFFFFFFF" when pixel_address = 80 else
-					  x"FFFFFFFF" when pixel_address = 100 else
-					  x"FFFFFFFF" when pixel_address = 120 else
-					  x"FFFFFFFF" when pixel_address = 140 else
-					  --x"FFFFFFFF" when pixel_address = 160 else
-					  x"FFFFFFFF" when pixel_address = 180 else
-					  x"FFFFFFFF" when pixel_address = 200 else
-					  x"FFFFFFFF" when pixel_address = 220 else
-					  x"FFFFFFFF" when pixel_address = 240 else
-					  x"FFFFFFFF" when pixel_address = 260 else
-					  x"FFFFFFFF" when pixel_address = 280 else
-					  x"FFFFFFFF" when pixel_address = 300 else
-					  x"FFFFFFFF" when pixel_address = 320 else
-					  x"FFFFFFFF" when pixel_address = 340 else
-					  x"FFFFFFFF" when pixel_address = 360 else
-					  x"FFFFFFFF" when pixel_address = 380 else
-					  x"FFFFFFFF" when pixel_address = 400 else
-					  --x"FFFFFFFF" when pixel_address = 420 else
-					  --x"FFFFFFFF" when pixel_address = 440 else
-					  --x"FFFFFFFF" when pixel_address = 460 else
-					  x"FFFFFFFF" when pixel_address = 480 else
-					  x"FFFFFFFF" when pixel_address = 500 else
-					  x"FFFFFFFF" when pixel_address = 520 else
-					  x"FFFFFFFF" when pixel_address = 540 else
-					  x"FFFFFFFF" when pixel_address = 560 else
-					  x"FFFFFFFF" when pixel_address = 580 else
-					  x"FFFFFFFF" when pixel_address = 600 else
-					  x"FFFFFFFF" when pixel_address = 620 else
-					  x"FFFFFFFF" when pixel_address = 640 else
-					  x"FFFFFFFF" when pixel_address = 660 else
-					  x"FFFFFFFF" when pixel_address = 680 else
-					  x"FFFFFFFF" when pixel_address = 700 else
-					  x"FFFFFFFF" when pixel_address = 720 else
-					  x"00000000";
-					  
-  
-  
-
   
   
 end rtl;
-
-
-
--- 27, 28.....128 - 139...... 146,147....180-184......200,201.........278-306
