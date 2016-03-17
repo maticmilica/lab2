@@ -367,12 +367,11 @@ begin
   char_address <= txt_addr_reg;
   char_we <= '1';			-- when txt_addr_reg < 1200 else '0';
 					 
-  char_value <= o"15" when char_address = 0 else
-					 o"11" when char_address = 1 else
-					 o"14" when char_address = 2 else
-					 o"11" when char_address = 3 else
-					 o"03" when char_address = 4 else
-					 o"01" when char_address = 5 else				--conv_integer(txt_addr_reg) = 5 else
+  char_value <= "000001" when char_address = 0 else
+					 "000010" when char_address = 2 else
+					 "000011" when char_address = 3 else
+					 "000100" when char_address = 4 else
+					 "000101" when char_address = 5 else				--conv_integer(txt_addr_reg) = 5 else
 					 "000000";	-- razmak
 					 
 
